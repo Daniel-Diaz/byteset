@@ -1,5 +1,5 @@
 name:                byteset
-version:             0.1.0.0
+version:             0.1.1.0
 synopsis:            Set of bytes.
 description:         Data structure for sets of bytes, where bytes are @Word8@ values.
 license:             BSD3
