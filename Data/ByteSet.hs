@@ -45,10 +45,14 @@ import Data.Int (Int)
 import Data.Bits
 import Data.Bool
 import Control.Category
+import Control.Applicative (Applicative (..))
 import qualified Data.Foldable as F
 import qualified Data.List as L
 import Data.Functor
 import GHC.Generics (Generic)
+import Data.Binary (Binary (..))
+import Data.Binary.Put (putWord64le)
+import Data.Binary.Get (getWord64le)
 
 -- | Set of bytes ('Word8'). Note that NF and WHNF are equivalent
 --   for values of type 'ByteSet'.
@@ -187,3 +191,10 @@ fromList = F.foldr insert empty
 
 instance Show ByteSet where
   show = show . elems
+
+instance Binary ByteSet where
+  put (ByteSet s1 s2 s3 s4) =
+       putWord64le s1 *> putWord64le s2
+    *> putWord64le s3 *> putWord64le s4
+  get = ByteSet <$> getWord64le <*> getWord64le
+                <*> getWord64le <*> getWord64le
